@@ -24,7 +24,7 @@ contract Copyright {
 
     //To setup the owner of the contract
     constructor() public{
-        owner = msg.sender;
+        owner = payable(msg.sender);
     }
 
     function addContent(bytes32 _hashId, string memory _contentUrl,
@@ -36,12 +36,12 @@ contract Copyright {
 
         counter += 1;
         Content memory newContent = Content(counter, _hashId,
-        _contentUrl, msg.sender, now, email, _termsOfUse);
+        _contentUrl, msg.sender, block.timestamp, _email, _termsOfUse);
         
-        copyrightsById(_hashId) = newContent;
+        copyrightsById[_hashId] = newContent;
         
         emit RegisteredContent(counter, _hashId, _contentUrl,
-        msg.sender, now, _email, _termsOfUse);
+        msg.sender, block.timestamp, _email, _termsOfUse);
     }
 
     //To delete something if you're the owner;
