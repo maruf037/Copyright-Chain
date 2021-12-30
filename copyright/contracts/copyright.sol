@@ -43,6 +43,18 @@ contract Copyright {
         emit RegisteredContent(counter, _hashId, _contentUrl,
         msg.sender, now, _email, _termsOfUse);
     }
+
+    //To delete something if you're the owner;
+    function deleteCopyrightedByHash(bytes32 _hashId) public {
+        if(copyrightsById[_hashId].owner == msg.sender) {
+            delete copyrightsById[_hashId];
+        }
+    }
+
+    //To extract the funds locked in this smart contract
+    function extractFunds() public {
+        owner.transfer(address(this).balance);
+    }
 }
 
 
